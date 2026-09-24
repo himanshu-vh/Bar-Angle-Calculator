@@ -96,7 +96,8 @@ class BarAngleFitter:
     
     def log_likelihood(self, theta):
         model = self.model_parallax(theta)
-        
+        if not np.all(np.isfinite(model)):
+            return -np.inf          # reject unphysical parameter combos        
         # Chi-squared
         chi2 = np.sum(((self.parallax_data - model) / self.parallax_error) ** 2)
         return -0.5 * chi2
@@ -159,7 +160,7 @@ class BarAngleFitter:
             initial_array = []
             for param in self.fit_params:
                 if param == 'bar_angle':
-                    initial_array.append(25.0)
+                    initial_array.append(10.0)
                 elif param == 'zp':
                     initial_array.append(0.0)
                 else:
@@ -198,6 +199,7 @@ class BarAngleFitter:
         self.sampler.run_mcmc(pos, n_steps, progress=True)
         
         self.samples = self.sampler.get_chain(discard=n_burn, thin=thin, flat=True)
+        self.chains  = self.sampler.get_chain()
         #tau = self.sampler.get_autocorr_time()
         #print(tau)
         return self.samples
@@ -248,6 +250,9 @@ class BarAngleFitter:
     def plot_corner(self, truths=None, filename=None):
         if self.samples is None:
             raise ValueError("Must run MCMC first!")
+        # if truths is None, set to median values
+        if truths is None:
+            truths = [np.median(self.samples[:, i]) for i in range(len(self.fit_params))]
                 
         fig = corner.corner(
             self.samples,

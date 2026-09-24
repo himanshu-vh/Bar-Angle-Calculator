@@ -11,6 +11,11 @@ __pycache__/
 # Large data directories
 longitude_cache/
 TheoreticalBarParallax/
+mcmc_fits/
+plots/
+GaiaParallax/
+
+
 
 # Large result files
 *.pdf
