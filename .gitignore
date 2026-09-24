@@ -14,7 +14,20 @@ TheoreticalBarParallax/
 mcmc_fits/
 plots/
 GaiaParallax/
-
+mcmc_fitsv2/
+mcmc_fitsv3/
+mcmc_fitsv4/
+mcmc_fitsv5/
+mcmc_fitsv6/
+mcmc_fitsv7/
+plotsv2/
+plotsv3/
+plotsv4/
+plotsv5/
+plotsv6/
+plotsv7/
+plotsv9/
+plotsv8/
 
 
 # Large result files
